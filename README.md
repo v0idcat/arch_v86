@@ -37,7 +37,7 @@ The `rsrc/buildvm.sh` is the main script that will first launch `packer` to crea
 
 `packer` will utilize the `rsrc/packer/template.json` configuration file to download, boot up Arch Linux and do preliminary setup, after which it will connect to the launched VM using SSH and use the `rsrc/packer/scripts/provision.sh` script to set up the image via SSH completely. 
 
-Once that is done, execution returns to the `buildvm.sh` script, which checks if the image creation was successful. Then, it calls `v86/tools/remap.sh`, which gets to work on mapping the image filesystem and creating compatible `.bin` files in the `output/images/arch/` directory that v86 will use to load the VM. 
+Once that is done, execution returns to the `buildvm.sh` script, which checks if the image creation was successful. Then, it gets to work on mapping the image filesystem and creating compatible `.bin` files in the `output/images/arch/` directory that v86 will use to load the VM. 
 
 If `buildvm.sh` was launched from `setup.sh`, then the execution is handed back to `setup.sh` at this point, where the built image is linked to the v86 project.
 
