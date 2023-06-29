@@ -17,15 +17,19 @@ Below you will find information pertaining to how everything is set up, and how 
 
 ## General Information & Process Breakdown
 
-#### Installing Dependencies
+#### \[ \* \] Installing Dependencies
 
 The `setup.sh` file will install all dependencies required for this project to work. It starts by updating the system, then `sudo` installing all the dependencies. It installs `rust` for *the current user only*, and as such, requires that these commands be issued by the current user, without sudo privileges. For this reason, this file must **not** be ran with `sudo`.
 
-#### Building v86
+---
+
+#### \[ \* \] Building v86
 
 This part is pretty straightforward; we'll be using the `examples/arch.html` file to boot the VM via the browser. The `setup.sh` script will run a couple commands to automate that process by `git clone`'ing the v86 project, then `make all` as the current user. This ensures that rust is present for the build process to succeed. 
 
-#### Building the image
+---
+
+#### \[ \* \] Building the image
 
 The Arch Linux image is built using the [Qemu Packer](https://developer.hashicorp.com/packer/plugins/builders/qemu) builder tool, where the process is automated completely from bootloader installation & configuration to filesystem setup. 
 
@@ -39,7 +43,9 @@ If `buildvm.sh` was launched from `setup.sh`, then the execution is handed back 
 
 *NOTE:* If you are having issues with qemu packer connecting via SSH, try checking the boot up process by connecting to the Arch Installation VM via VNC. The local port should be given to you by packer/qemu before it waits for boot. This issue will arise if the boot_wait is not enough; in that case, you can increase the wait time in the file `rsrc/packer/scripts/template.json` Line #22.
 
-#### Running Arch in a BBVM
+---
+
+#### \[ \* \] Running Arch in a BBVM
 
 The image building process should automatically be mapped and linked to the necessary files required to load the VM. This section, however, will outline the simple process. In the `arch.html` file, you'll find the following lines that show the filesystem location: 
 - `filesystem: { baseurl: "../images/arch/", basefs: "../images/fs.json"}` 
@@ -50,7 +56,9 @@ To run the project, we need to host the files using an HTTP server that supports
 
 Now we can go to `http://localhost:8000/examples/arch.html` and the VM will automagically boot.
 
-#### Saving/loading machine state
+---
+
+#### \[ \* \] Saving/loading machine state
 
 *Saving and loading states must be done through the v86 project.* 
 
@@ -61,14 +69,16 @@ If you want to automatically load a specified machine state when the webpage loa
 - Add the line `initial_state: { "url": "http://localhost:8000/images/v86state.bin" },`
 The next time you visit the same webpage, it should automatically load the machine state.
 
-#### Modifying the Arch image via Qemu
+#### \[ \* \] Modifying the Arch image via Qemu
 
 If you want to modify the base image, you can launch the `arch.img` file under `arch_v86/v86/images/` directory via qemu using the following command:
 -  `qemu-system-x86-64 -m 0.5G -drive file=images/arch.img,format=raw` 
 
 After you're done modifying the image, shutdown then run `tools/remap.sh` to remap and recreate the `.bin` files that v86 uses to load the VM. This means that `arch.img` does not directly interact with v86, and as such, any modifications to that file will **not** transfer over until you run the script. 
 
-#### Overall process flow
+---
+
+#### \[ \* \] Overall process flow
 
 `setup.sh`:
 1. Calls `rsrc/inst_depend.sh`
