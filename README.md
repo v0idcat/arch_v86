@@ -69,6 +69,8 @@ If you want to automatically load a specified machine state when the webpage loa
 - Add the line `initial_state: { "url": "http://localhost:8000/images/v86state.bin" },`
 The next time you visit the same webpage, it should automatically load the machine state.
 
+---
+
 #### \[ \* \] Modifying the Arch image via Qemu
 
 If you want to modify the base image, you can launch the `arch.img` file under `arch_v86/v86/images/` directory via qemu using the following command:
