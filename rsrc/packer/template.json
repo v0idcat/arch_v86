@@ -1,0 +1,40 @@
+{
+    "provisioners": [
+    {
+        "type": "shell",
+        "override": {
+            "qemu": {
+                "scripts": ["scripts/provision.sh"]
+        }
+        }
+    }
+    ],
+    "builders": [
+    {
+        "type": "qemu",
+        "boot_command": [
+            "<enter><wait10s>",
+            "dhcpcd<enter><wait10s>",
+            "usermod --password $(echo toor | openssl passwd -1 -stdin) root<enter><wait10s>",
+            "systemctl start sshd<enter><wait10s>"
+        ],
+        "headless": true,
+        "boot_wait": "4m30s",
+        "disk_size": 2048,
+        "disk_interface": "ide",
+        "http_directory": "http",
+        "iso_url": "https://mirror.archlinux32.org/archisos/archlinux32-2023.03.02-i686.iso",
+        "iso_checksum": "sha1:b670458c7aeeefe0d4af11a16f76bd37b32783a2",
+        "ssh_wait_timeout": "120s",
+        "ssh_pty": true,
+        "ssh_username": "root",
+        "ssh_password": "toor",
+        "ssh_port": 22,
+        "format": "raw",
+        "vm_name": "Briareus",
+        "qemuargs": [
+            [ "-m", "1024m" ]
+        ]
+    }
+    ]
+}
