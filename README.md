@@ -9,7 +9,7 @@ This project aims to streamline the entire set up as much as possible; it will i
 *Tested on Ubuntu 22.04*
 
 1. Run `setup.sh` for the full setup.
-2. Inside the newly created `v86` directory, run `python2 tools/RangeHTTPServer.py`
+2. Inside the newly created `v86` directory, run `python2 tools/RangeHTTPServer.py` to host the files.
 
 Note that this will set everything up under the current user's `Documents/arch_v86/` folder, and assumes that you `git clone`'d this repo to `Documents/`. While this script will require you to not run it with `sudo` privileges, the current user still needs to be able to issue `sudo` commands.
 
