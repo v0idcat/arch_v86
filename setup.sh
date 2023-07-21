@@ -16,14 +16,31 @@ if ! [ "$EUID" -ne 0 ]
     exit
 fi
 
+if [ -z "$1" ]
+    then echo "Insufficient arguments. Please supply the installation directory."
+    echo ""
+    echo ""
+    echo "Usage: $0 <OUTPUT>"
+    echo "Example: $0 /var/www/html/web_arch"
+    echo ""
+    exit
+fi
+
 USER="$(logname)"
-DIR=/home/"$USER"/Documents/arch_v86
+# fetch setup.sh directory
+ROOT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+OUTPUT=$1
+
+if [[ "$OUTPUT" == */ ]] # if last char == /
+    then
+    OUTPUT=${OUTPUT::-1} # remove last char
+fi
 
 # Update sys
 echo "==================================="
 echo "=== [*] Installing dependencies ==="
 echo "==================================="
-cd "$DIR" && /bin/bash ./rsrc/inst_depend.sh
+cd "$ROOT_DIR" && /bin/bash ./rsrc/inst_depend.sh
 
 # provide rust to current shell
 export PATH=$HOME/.cargo/bin:$PATH
@@ -32,24 +49,26 @@ export PATH=$HOME/.cargo/bin:$PATH
 echo "======================================"
 echo "=== [*] Downloading & building v86 ==="
 echo "======================================"
-cd "$DIR" && git clone https://github.com/copy/v86
-cd "$DIR"/v86/ && make all
+git clone https://github.com/copy/v86 && cd v86/ && make all && cd ..
 
 # relocate remap.sh and make it executable
-mv "$DIR"/rsrc/remap.sh "$DIR"/v86/tools/remap.sh && chmod +x "$DIR"/v86/tools/remap.sh
+mv "$ROOT_DIR"/rsrc/remap.sh "$ROOT_DIR"/v86/tools/remap.sh && chmod +x "$ROOT_DIR"/v86/tools/remap.sh
 
 # Build VM
 echo "================================================="
 echo "=== [*] Downloading & building the arch image ==="
 echo "================================================="
-cd "$DIR"/rsrc && sudo /bin/bash "$DIR"/rsrc/buildvm.sh
-sed -i 's/\"init=\/usr\/bin\/init-openrc\",//g' "$DIR"/v86/examples/arch.html
+sudo /bin/bash "$ROOT_DIR"/rsrc/buildvm.sh "$ROOT_DIR"
+sed -i 's/\"init=\/usr\/bin\/init-openrc\",//g' "$ROOT_DIR"/v86/examples/arch.html
 
 # Fetching RangeHTTPServer
-wget https://raw.githubusercontent.com/smgoller/rangehttpserver/master/RangeHTTPServer.py -P "$DIR"/v86/tools/
+wget https://raw.githubusercontent.com/smgoller/rangehttpserver/master/RangeHTTPServer.py -P "$ROOT_DIR"/v86/tools/
 
+# make dir if doesn't exist then move to output dir
 # Set appropriate ownership
-sudo chown -R "$USER":"$USER" "$DIR"
+sudo mkdir -p "$OUTPUT"
+mv "$ROOT_DIR"/v86 "$OUTPUT"
+sudo chown -R "$USER":"$USER" "$OUTPUT"
 
 echo ""
 echo ""
