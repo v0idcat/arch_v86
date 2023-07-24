@@ -8,7 +8,7 @@ This project aims to streamline the entire set up as much as possible; it will i
 
 *Tested on Ubuntu 22.04*
 
-1. Run `setup.sh` for the full setup.
+1. Run [`setup.sh`](docs/setup.sh.md) for the full setup.
 2. Inside the newly created `v86` directory, run `python2 tools/RangeHTTPServer.py` to host the files.
 
 Note that this will set everything up under the current user's `Documents/arch_v86/` folder, and assumes that you `git clone`'d this repo to `Documents/`. While this script will require you to not run it with `sudo` privileges, the current user still needs to be able to issue `sudo` commands.
@@ -21,13 +21,13 @@ Below you will find information pertaining to how everything is set up, and how 
 
 #### \[ \* \] Overall process flow
 
-`setup.sh`:
+[`setup.sh`](docs/setup.sh.md):
 1. Calls `rsrc/inst_depend.sh`
 	1. Updates system
 	2. Installs dependencies
 2. Builds v86
-3. Calls `rsrc/buildvm.sh`:
-	1. Builds VM
+3. Calls [`rsrc/buildvm.sh`](docs/buildvm.sh.md):
+	1. Builds VM using Packer
 	2. Maps VM fs
 4. Fetches RangeHTTPServer
 5. Sets user ownership
