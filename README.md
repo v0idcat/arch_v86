@@ -8,10 +8,10 @@ This project aims to streamline the entire set up as much as possible; it will i
 
 *Tested on Ubuntu 22.04*
 
-1. Run [`setup.sh`](docs/setup.sh.md) for the full setup.
+1. Run [`setup.sh`](docs/setup.sh.md) `<OUTPUT_DIR>` to install the project under the specified directory.
 2. Inside the newly created `v86` directory, run `python2 tools/RangeHTTPServer.py` to host the files.
 
-Note that this will set everything up under the current user's `Documents/arch_v86/` folder, and assumes that you `git clone`'d this repo to `Documents/`. While this script will require you to not run it with `sudo` privileges, the current user still needs to be able to issue `sudo` commands.
+Note that while this script will require you to not run it with `sudo` privileges, the current user still needs to be able to issue `sudo` commands.
 
 Below you will find information pertaining to how everything is set up, and how you may modify certain aspects of this project, including the arch image, to fit your needs. 
 
@@ -36,7 +36,7 @@ Below you will find information pertaining to how everything is set up, and how 
 
 #### \[ \* \] Installing Dependencies
 
-The `setup.sh` file will install all dependencies required for this project to work. It starts by updating the system, then `sudo` installing all the dependencies. It installs `rust` for *the current user only*, and as such, requires that these commands be issued by the current user, without sudo privileges. For this reason, this file must **not** be ran with `sudo`.
+The `setup.sh` file will install all dependencies required for this project to work by calling `inst_depend.sh`. That script will start by updating the system, then `sudo` installing all the dependencies. Then, it installs `rust` for *the current user only*, and as such, requires that these commands be issued by the current user, without sudo privileges. For this reason, `setup.sh` must **not** be ran with `sudo`.
 
 ---
 
@@ -56,7 +56,7 @@ The `rsrc/buildvm.sh` is the main script that will first launch `packer` to crea
 
 Once that is done, execution returns to the `buildvm.sh` script, which checks if the image creation was successful. Then, it gets to work on mapping the image filesystem and creating compatible `.bin` files in the `output/images/arch/` directory that v86 will use to load the VM. 
 
-If `buildvm.sh` was launched from `setup.sh`, then the execution is handed back to `setup.sh` at this point, where the built image is linked to the v86 project.
+Execution is then handed back to `setup.sh` at this point, where the built image is linked to the v86 project.
 
 *NOTE:* If you are having issues with qemu packer connecting via SSH, try checking the boot up process by connecting to the Arch Installation VM via VNC. The local port should be given to you by packer/qemu before it waits for boot. This issue will arise if the boot_wait is not enough; in that case, you can increase the wait time in the file `rsrc/packer/scripts/template.json` Line #22.
 
