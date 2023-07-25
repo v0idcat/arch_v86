@@ -2,12 +2,12 @@
 
 echo "[*] Updating system ..."
 export DEBIAN_FRONTEND=noninteractive
-sudo dpkg --add-architecture i386 
-sudo apt-get update
+sudo dpkg --add-architecture i386 # allow x86 arch packages 
+sudo apt-get update -q
 
 # Install reqs
 echo "[*] Installing dependencies ..."
-sudo apt-get install -y nodejs nasm gdb unzip p7zip-full openjdk-8-jre wget python2 python3 qemu-system-x86 git-core build-essential libc6-dev-i386-cross libc6-dev-i386 clang curl time python3-pip packer qemu-system kpartx qemu
+sudo apt-get install -q -y nodejs nasm gdb unzip p7zip-full openjdk-8-jre wget python2 python3 qemu-system-x86 git-core build-essential libc6-dev-i386-cross libc6-dev-i386 clang curl time python3-pip packer qemu-system kpartx qemu
 
 # Install rust & rust toolchains/components/targets
 echo "[*] Installing rust ..."
