@@ -9,7 +9,7 @@ This project aims to streamline the entire set up as much as possible; it will i
 *Tested on Ubuntu 22.04*
 
 1. Run [`setup.sh`](docs/setup.sh.md) `<OUTPUT_DIR>` to install the project under the specified directory.
-2. Inside the newly created `v86` directory, run `python2 tools/RangeHTTPServer.py` to host the files.
+2. Inside the newly created `v86` directory, run [`python2 tools/RangeHTTPServer.py`](https://github.com/smgoller/rangehttpserver/) to host the files.
 
 Note that while this script will require you to not run it with `sudo` privileges, the current user still needs to be able to issue `sudo` commands.
 
@@ -22,7 +22,7 @@ Below you will find information pertaining to how everything is set up, and how 
 #### \[ \* \] Overall process flow
 
 [`setup.sh`](docs/setup.sh.md):
-1. Calls `rsrc/inst_depend.sh`
+1. Calls [`rsrc/inst_depend.sh`](docs/inst_depend.sh.md)
 	1. Updates system
 	2. Installs dependencies
 2. Builds v86
@@ -93,5 +93,5 @@ The next time you visit the same webpage, it should automatically load the machi
 If you want to modify the base image, you can launch the `arch.img` file under `arch_v86/v86/images/` directory via qemu using the following command:
 -  `qemu-system-x86-64 -m 0.5G -drive file=images/arch.img,format=raw` 
 
-After you're done modifying the image, shutdown then run `tools/remap.sh` to remap and recreate the `.bin` files that v86 uses to load the VM. This means that `arch.img` does not directly interact with v86, and as such, any modifications to that file will **not** transfer over until you run the script. 
+After you're done modifying the image, shutdown then run [`tools/remap.sh`](docs/remap.sh.md) to remap and recreate the `.bin` files that v86 uses to load the VM. This means that `arch.img` does not directly interact with v86, and as such, any modifications to that file will **not** transfer over until you run the script. 
 
