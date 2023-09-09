@@ -49,7 +49,7 @@ export PATH=$HOME/.cargo/bin:$PATH
 echo "======================================"
 echo "=== [*] Downloading & building v86 ==="
 echo "======================================"
-git clone https://github.com/copy/v86 && cd v86/ && make all && cd ..
+sudo git clone https://github.com/copy/v86 && sudo sudo chown -R "$USER":"$USER" v86 && cd v86/ && make all && cd ..
 
 # relocate remap.sh and make it executable
 mv "$ROOT_DIR"/rsrc/remap.sh "$ROOT_DIR"/v86/tools/remap.sh && chmod +x "$ROOT_DIR"/v86/tools/remap.sh
@@ -67,7 +67,7 @@ wget https://raw.githubusercontent.com/smgoller/rangehttpserver/master/RangeHTTP
 # make dir if doesn't exist then move to output dir
 # Set appropriate ownership
 sudo mkdir -p "$OUTPUT"
-mv "$ROOT_DIR"/v86 "$OUTPUT"
+sudo mv "$ROOT_DIR"/v86 "$OUTPUT"
 sudo chown -R "$USER":"$USER" "$OUTPUT"
 
 echo ""
