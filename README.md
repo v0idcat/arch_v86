@@ -95,3 +95,8 @@ If you want to modify the base image, you can launch the `arch.img` file under `
 
 After you're done modifying the image, shutdown then run [`tools/remap.sh`](docs/remap.sh.md) to remap and recreate the `.bin` files that v86 uses to load the VM. This means that `arch.img` does not directly interact with v86, and as such, any modifications to that file will **not** transfer over until you run the script. 
 
+---
+
+#### \[ \* \] Hosting the project on Apache
+
+Apache natively accepts range requests, which are required for this project to run properly. As such, there is no additional setup required beyond that of the Apache server itself. Once that's complete, you can place the `v86` folder inside the `/var/www/html/` folder so that users may access the VM. 

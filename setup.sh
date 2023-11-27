@@ -62,7 +62,9 @@ sudo /bin/bash "$ROOT_DIR"/rsrc/buildvm.sh "$ROOT_DIR"
 sed -i 's/\"init=\/usr\/bin\/init-openrc\",//g' "$ROOT_DIR"/v86/examples/arch.html
 
 # Fetching RangeHTTPServer
-wget https://raw.githubusercontent.com/smgoller/rangehttpserver/master/RangeHTTPServer.py -P "$ROOT_DIR"/v86/tools/
+#wget https://raw.githubusercontent.com/smgoller/rangehttpserver/master/RangeHTTPServer.py -P "$ROOT_DIR"/v86/tools/
+pip install rangehttpserver
+
 
 # make dir if doesn't exist then move to output dir
 # Set appropriate ownership
